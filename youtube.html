@@ -5,6 +5,9 @@
   <title>Youtube Mini dengan Pencarian</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.plyr.io/2.0.13/plyr.css">
+  
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  
   <style>
     body {
       background-image: url('https://i.pinimg.com/736x/e0/da/55/e0da55cc137e6e955eef1485aea44b0d.jpg');
@@ -189,6 +192,14 @@
 
   // Playlist dengan kategori
   var myPlaylist = [
+    { type: "youtube", title: "Linkin Park", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=LQ3G7QaYgMA", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkfQ4WIDfOJ1U2jdvAbNZ6HFi1dPQFxA4e3wT36EuXll6rA1n-KWrajMU&s=10"},
+    { type: "youtube", title: "Adele", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=7viuJ-swHGA", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2l-_C-oPjgLXZPUEUYkMg6AC6V29f6jwExaMoXPqSrgbp4xHRp1yW8mU&s=10"},
+    { type: "youtube", title: "Blink 182", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=V1LoQdTuWRg", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTij_WjElMrC8O4WYKsAva_Qca2HPIGqH_r181zvP9GsZcRzbCOJ6JjEw0&s=10"},
+    { type: "youtube", title: "Green Day", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=sna_z9xgZFs", type: "youtube"}], poster: "https://upload.wikimedia.org/wikipedia/en/8/8f/Blink-182_-_Blink-182_cover.jpg"},
+    { type: "youtube", title: "Basejam", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=QTiCef28Stg", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpJPA68l6gllrKM5Lk65r-UpAB1HIYcQEZLBUi4VnjoE1jxQzW5EgES7M&s=10"},
+    { type: "youtube", title: "Bondan Prokoso And Fade 2 Black", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=do9rpLbY-f4", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV60k0whcay6zr-Pe1iEhIgDG4pR3RdejB0lKZbuV5I-isrwft30e1Ff8&s=10"},
+    { type: "youtube", title: "Andra And The Backbone", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=eoopQyTZbuQ", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7A1fPkJr3wlGF6Qz62XhnIix6AsqTgpkxqq_yDbj5xGl8HiZCzLoDzn-U&s=10"},
+    { type: "youtube", title: "Armada", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=fiBXdiXsZ78", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb2fgiZjkXzN9bqNp_0AxvmB_g7vEZ01JN5VfQQ6WU3n-bIxb2u0QWnlBh&s=10"},
     { type: "youtube", title: "Musik Mix Indonesia", kategori: "Musik Mix", sources: [{src: "https://www.youtube.com/watch?v=HB-hb7goSeA", type: "youtube"}], poster: "https://i.pinimg.com/736x/b8/08/c2/b808c2715a14d4062cc4ff84442fa97f.jpg"},
     { type: "youtube", title: "Iwan fals", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=UU-dTGy0ZGM", type: "youtube"}], poster: "https://i.pinimg.com/736x/8b/ac/10/8bac107a3861d3cb96ecf38cdb87fff2.jpg"},
     { type: "youtube", title: "Bon jovi", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=U9rSIYX8ukA", type: "youtube"}], poster: "https://i.pinimg.com/736x/7f/d6/72/7fd6728c233ea96410b0a33164237482.jpg"},
@@ -246,5 +257,69 @@
     });
   });
 </script>
+
+
+
+<!-- Bottom Navigation Bar -->
+<style>
+  .bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #000;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid #222;
+    z-index: 1000;
+  }
+
+  .bottom-nav a {
+    color: #ccc;
+    font-size: 10px;
+    text-align: center;
+    flex: 1;
+    text-decoration: none;
+  }
+
+  .bottom-nav a.active {
+    color: #fff;
+  }
+
+  .bottom-nav a i {
+    font-size: 16px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+.video-container {
+  position: relative;
+  display: inline-block;
+}
+
+.watermark {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 20px;
+  font-weight: bold;
+  pointer-events: none;
+  z-index: 10;
+}
+
+</style>
+
+<div class="bottom-nav">
+   <a href="go:Home80" class="active"><i class="fas fa-home"></i>Home</a>
+  <a href="go:Seri2"><i class="fas fa-video"></i>Series</a>
+  <a href="go:Hometv"><i class="fas fa-tv"></i>Tv</a>
+  <a href="go:Musik5"><i class="fas fa-music"></i>Musik</a>
+  <a href="go:New"><i class="fas fa-film"></i>New Film</a>
+</div>
+
+
 </body>
 </html>
