@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Youtube Mini dengan Pencarian</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.plyr.io/2.0.13/plyr.css">
+  <style>
+    body {
+      background-image: url('https://i.pinimg.com/736x/e0/da/55/e0da55cc137e6e955eef1485aea44b0d.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-position: center;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding-bottom: 80px;
+    }
+
+    /* LOGO POJOK KIRI ATAS */
+    .logo {
+      position: fixed;
+      top: 145px;
+      left: 12px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 2px  #fff;
+      z-index: 100;
+    }
+
+    /* Pencarian Sticky */
+    .search-bar {
+      position: sticky;
+      top: 0;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 8px;
+      text-align: center;
+      z-index: 30;
+    }
+    .search-bar input {
+      width: 90%;
+      padding: 6px 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    /* Posisi kategori tetap */
+    .kategori-filter {
+      text-align: center;
+      margin-bottom: 10px;
+      position: sticky;
+      top: 48px; /* di bawah search */
+      background: rgba(0,0,0,0.8);
+      padding: 5px 0;
+      z-index: 20;
+    }
+    .filter-btn {
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      margin: 3px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .filter-btn.active {
+      background: #3498db;
+    }
+
+    /* Player tetap */
+    #player {
+      position: sticky;
+      top: 100px; /* di bawah kategori */
+      z-index: 10;
+      background: rgba(0,0,0,0.9);
+      padding: 5px;
+    }
+
+    /* Playlist Poster */
+    .plyr-playlist-wrapper {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 0.5em;
+      margin-top: 10px;
+    }
+    .plyr-playlist-wrapper .plyr-playlist {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+      padding: 0;
+      margin: 0;
+    }
+    .plyr-playlist-wrapper .plyr-playlist li {
+      list-style: none;
+      background-color: rgba(255, 255, 255, 0.05);
+      text-align: center;
+      border-radius: 6px;
+    }
+    .plyr-playlist-wrapper .plyr-playlist li a {
+      text-decoration: none;
+      color: #fff;
+      display: block;
+      padding: 5px;
+    }
+    .plyr-miniposter {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      object-fit: cover;
+      border: 2px solid #fff;
+      border-radius: 6px;
+      margin-bottom: 5px;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: #000;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 6px 0;
+      border-top: 1px solid #222;
+      z-index: 1000;
+    }
+    .bottom-nav a {
+      color: #ccc;
+      font-size: 10px;
+      text-align: center;
+      flex: 1;
+      text-decoration: none;
+    }
+    .bottom-nav a.active {
+      color: #fff;
+    }
+    .bottom-nav a i {
+      font-size: 16px;
+      display: block;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGO -->
+<img class="logo" src="https://i.pinimg.com/736x/93/61/72/9361725970110e5e667a0931178869e3.jpg" alt="Logo">
+
+<div class="container">
+  <!-- Pencarian -->
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Cari judul musik...">
+  </div>
+
+  <!-- Tombol Kategori -->
+  <div class="kategori-filter">
+    <button class="filter-btn active" data-kategori="All">Semua</button>
+    <button class="filter-btn" data-kategori="Musik Barat">Musik Barat</button>
+    <button class="filter-btn" data-kategori="Musik Indonesia">Musik Indonesia</button>
+    <button class="filter-btn" data-kategori="Musik Dangdut">Musik Dangdut</button>
+    <button class="filter-btn" data-kategori="Musik Melayu">Musik Melayu</button>
+    <button class="filter-btn" data-kategori="Musik Mix">Musik Mix</button>
+  </div>
+
+  <!-- Player -->
+  <div id="player">
+    <div class="js-player" data-type="youtube" data-video-id=""></div>
+  </div>
+</div>
+
+
+
+<script src="https://cdn.plyr.io/2.0.13/plyr.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var players = plyr.setup(".js-player");
+  var currentCategory = "All";
+  var searchKeyword = "";
+
+  // Playlist dengan kategori
+  var myPlaylist = [
+    { type: "youtube", title: "Musik Mix Indonesia", kategori: "Musik Mix", sources: [{src: "https://www.youtube.com/watch?v=HB-hb7goSeA", type: "youtube"}], poster: "https://i.pinimg.com/736x/b8/08/c2/b808c2715a14d4062cc4ff84442fa97f.jpg"},
+    { type: "youtube", title: "Iwan fals", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=UU-dTGy0ZGM", type: "youtube"}], poster: "https://i.pinimg.com/736x/8b/ac/10/8bac107a3861d3cb96ecf38cdb87fff2.jpg"},
+    { type: "youtube", title: "Bon jovi", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=U9rSIYX8ukA", type: "youtube"}], poster: "https://i.pinimg.com/736x/7f/d6/72/7fd6728c233ea96410b0a33164237482.jpg"},
+    { type: "youtube", title: "Rhoma irama", kategori: "Musik Dangdut", sources: [{src: "https://www.youtube.com/watch?v=mXOeMDqx0ks", type: "youtube"}], poster: "https://i.pinimg.com/736x/80/2c/cb/802ccb0d49cfe08080871a8322a6d97e.jpg"},
+    { type: "youtube", title: "Search fenomena", kategori: "Musik Melayu", sources: [{src: "https://www.youtube.com/watch?v=DSSO5WtNQUY", type: "youtube"}], poster: "https://i.pinimg.com/736x/c0/41/35/c041351d43549eb49810514dd6f63319.jpg"}
+  ];
+
+  function loadPlaylist(playlist) {
+    $(".plyr-playlist-wrapper").remove();
+    $('<div class="plyr-playlist-wrapper"><ul class="plyr-playlist"></ul></div>').insertAfter("#player");
+    var items = [];
+    $.each(playlist, function(id, val) {
+      items.push(
+        '<li class="'+(id===0?'pls-playing':'')+'"><a href="#" data-type="' +
+        val.sources[0].type + '" data-video-id="' + val.sources[0].src +
+        '"><img class="plyr-miniposter" src="' + val.poster + '"> ' + val.title + '</a></li>'
+      );
+    });
+    $(".plyr-playlist").html(items.join(""));
+    $(".plyr-playlist li.pls-playing a").trigger("click");
+  }
+
+  function filterPlaylist() {
+    let filtered = myPlaylist.filter(item => {
+      let matchCategory = (currentCategory === "All" || item.kategori === currentCategory);
+      let matchSearch = item.title.toLowerCase().includes(searchKeyword.toLowerCase());
+      return matchCategory && matchSearch;
+    });
+    loadPlaylist(filtered);
+  }
+
+  $(document).ready(function() {
+    filterPlaylist();
+  });
+
+  $(document).on("click", ".filter-btn", function() {
+    $(".filter-btn").removeClass("active");
+    $(this).addClass("active");
+    currentCategory = $(this).data("kategori");
+    filterPlaylist();
+  });
+
+  $("#searchInput").on("input", function() {
+    searchKeyword = $(this).val();
+    filterPlaylist();
+  });
+
+  $(document).on("click", "ul.plyr-playlist li a", function(event) {
+    event.preventDefault();
+    $("li.pls-playing").removeClass("pls-playing");
+    $(this).parent().addClass("pls-playing");
+    players[0].source({
+      type: "video",
+      sources: [{ src: $(this).data("video-id"), type: $(this).data("type") }]
+    });
+  });
+</script>
+</body>
+</html>
