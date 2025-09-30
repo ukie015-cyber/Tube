@@ -159,7 +159,7 @@
       position: fixed;
       width: 50px;
       height: 50px;
-      bottom: 70px; /* biar tidak tabrakan dengan bottom nav */
+      bottom: 70px; /* biar tidak nabrak bottom nav */
       right: 15px;
       background-color: #0088cc;
       color: #fff;
@@ -206,7 +206,6 @@
 </div>
 
 
-
 <!-- Floating Telegram -->
 <a href="https://t.me/mrzyb_movie" target="_blank" class="telegram-float">
   <i class="fab fa-telegram-plane"></i>
@@ -222,8 +221,18 @@
   // Playlist dengan kategori
   var myPlaylist = [
     { type: "youtube", title: "Linkin Park", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=LQ3G7QaYgMA", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkfQ4WIDfOJ1U2jdvAbNZ6HFi1dPQFxA4e3wT36EuXll6rA1n-KWrajMU&s=10"},
-    { type: "youtube", title: "Adele", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=7viuJ-swHGA", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2l-_C-oPjgLXZPUEUYkMg6AC6V29f6jwExaMoXPqSrgbp4xHRp1yW8mU&s=10"}
-    // dst playlistmu...
+    { type: "youtube", title: "Adele", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=7viuJ-swHGA", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2l-_C-oPjgLXZPUEUYkMg6AC6V29f6jwExaMoXPqSrgbp4xHRp1yW8mU&s=10"},
+    { type: "youtube", title: "Blink 182", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=V1LoQdTuWRg", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTij_WjElMrC8O4WYKsAva_Qca2HPIGqH_r181zvP9GsZcRzbCOJ6JjEw0&s=10"},
+    { type: "youtube", title: "Green Day", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=sna_z9xgZFs", type: "youtube"}], poster: "https://upload.wikimedia.org/wikipedia/en/8/8f/Blink-182_-_Blink-182_cover.jpg"},
+    { type: "youtube", title: "Basejam", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=QTiCef28Stg", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpJPA68l6gllrKM5Lk65r-UpAB1HIYcQEZLBUi4VnjoE1jxQzW5EgES7M&s=10"},
+    { type: "youtube", title: "Bondan Prokoso And Fade 2 Black", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=do9rpLbY-f4", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV60k0whcay6zr-Pe1iEhIgDG4pR3RdejB0lKZbuV5I-isrwft30e1Ff8&s=10"},
+    { type: "youtube", title: "Andra And The Backbone", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=eoopQyTZbuQ", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7A1fPkJr3wlGF6Qz62XhnIix6AsqTgpkxqq_yDbj5xGl8HiZCzLoDzn-U&s=10"},
+    { type: "youtube", title: "Armada", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=fiBXdiXsZ78", type: "youtube"}], poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb2fgiZjkXzN9bqNp_0AxvmB_g7vEZ01JN5VfQQ6WU3n-bIxb2u0QWnlBh&s=10"},
+    { type: "youtube", title: "Musik Mix Indonesia", kategori: "Musik Mix", sources: [{src: "https://www.youtube.com/watch?v=HB-hb7goSeA", type: "youtube"}], poster: "https://i.pinimg.com/736x/b8/08/c2/b808c2715a14d4062cc4ff84442fa97f.jpg"},
+    { type: "youtube", title: "Iwan fals", kategori: "Musik Indonesia", sources: [{src: "https://www.youtube.com/watch?v=UU-dTGy0ZGM", type: "youtube"}], poster: "https://i.pinimg.com/736x/8b/ac/10/8bac107a3861d3cb96ecf38cdb87fff2.jpg"},
+    { type: "youtube", title: "Bon jovi", kategori: "Musik Barat", sources: [{src: "https://www.youtube.com/watch?v=U9rSIYX8ukA", type: "youtube"}], poster: "https://i.pinimg.com/736x/7f/d6/72/7fd6728c233ea96410b0a33164237482.jpg"},
+    { type: "youtube", title: "Rhoma irama", kategori: "Musik Dangdut", sources: [{src: "https://www.youtube.com/watch?v=mXOeMDqx0ks", type: "youtube"}], poster: "https://i.pinimg.com/736x/80/2c/cb/802ccb0d49cfe08080871a8322a6d97e.jpg"},
+    { type: "youtube", title: "Search fenomena", kategori: "Musik Melayu", sources: [{src: "https://www.youtube.com/watch?v=DSSO5WtNQUY", type: "youtube"}], poster: "https://i.pinimg.com/736x/c0/41/35/c041351d43549eb49810514dd6f63319.jpg"}
   ];
 
   function loadPlaylist(playlist) {
